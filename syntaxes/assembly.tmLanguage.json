@@ -104,6 +104,15 @@
 				{
 					"name":"comment.line",
 					"match": ";.*$"
+				},
+				{
+					"name":"comment.line",
+					"match": "#.*$"
+				},
+				{
+				"name": "comment.block",
+					"begin": "/\\*",
+					"end": "\\*/"
 				}
 			]
 		},
