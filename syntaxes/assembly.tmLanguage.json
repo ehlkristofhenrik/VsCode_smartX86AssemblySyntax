@@ -30,6 +30,9 @@
 			"include": "#comment"
 		},
 		{
+			"include": "#branch"
+		},
+		{
 			"include": "#strings"
 		}
 		
@@ -38,7 +41,7 @@
 		"directives": {
 			"patterns": [{
 				"name": "meta.preprocessor",
-				"match": "\\b(?i)(model|stack|library|qword|dword|equ|resq|resd|resw|resb|dq|dd|dw|db|executable|writeable|readable|format|entry|use16|use64|use32|GUI|console|MZ|binary|ELF|COFF|MS|PE|fill|asciz|ascii|string|balign|align|noprefix|lcomm|comm|ptr|float|quad|double|word|byte|bss|data|text|macro|import|include|extern|globl|global)\\b"
+				"match": "\\b(?i)(BYTE|WORD|DWORD|QWORD|PTR|intel_mnemonic|intel_syntax|noprefix|ascii|asciz|string|comm|lcomm|byte|word|dword|qword|hword|octa|long|float|double|ptr|abort|align|balign|app-file|text|data|bss|rodata|section|def|desc|dim|eject|else|endef|endif|equ|extern|file|fill|ident|if|include|int|irp|irpc|line|ln|list|nolist|macro|endm|exitm|org|p2align|quad|rept|sbttl|scl|set|short|single|size|space|stabn|stabd|stabs|tag|title|type|val)\\b"
 			}]
 		},
 		"volatile_registers": {
@@ -51,7 +54,7 @@
 			"patterns": [
 				{
 					"name":"markup.deleted",
-					"match": "\\b(?i)(ymm14|xmm14|ymm13|xmm13|ymm12|xmm12|ymm11|xmm11|ymm10|xmm10|ymm9|xmm9|ymm8|xmm8|ymm7|xmm7|ymm6|xmm6|mm7|mm6|mm5|mm4|mm3|mm2|mm1|mm0|r15b|r15w|r15d|r15|r14b|r14w|r14d|r14|r13b|r13w|r13d|r13|r12b|r12w|r12d|r12|rip|bp|ebp|rbp|sp|esp|rsp|di|edi|rdi|si|esi|rsi|bl|bh|bx|ebx|rbx|s7|s6|s5|s4|s3|s2|s1|s0)\\b"
+					"match": "\\b(?i)(ymm14|xmm14|ymm13|xmm13|ymm12|xmm12|ymm11|xmm11|ymm10|xmm10|ymm9|xmm9|ymm8|xmm8|ymm7|xmm7|ymm6|xmm6|mm7|mm6|mm5|mm4|mm3|mm2|mm1|mm0|r15b|r15w|r15d|r15|r14b|r14w|r14d|r14|r13b|r13w|r13d|r13|r12b|r12w|r12d|r12|rip|bp|ebp|rbp|sp|esp|rsp|di|edi|rdi|si|esi|rsi|bl|bh|bx|ebx|rbx|s0|s1|s2|s3|s4|s5|s6|s7|st(0)|st)\\b"
 				}
 			]
 		},
@@ -59,7 +62,7 @@
 			"patterns": [
 				{
 					"name":"keyword.control.less",
-					"match": "\\b(?i)(xor|xlat|xchg|xbts|wait|verw|verr|test|syscall|sub|str|stosw|stosd|stosb|sti|std|stc|smsw|sldt|sidt|shrd|shr|shld|shl|sgdt|setcc|scasw|scasd|scasb|sbb|sar|sal|sahf|ror|rol|retn|retf|ret|repxx|rcr|rcl|pushfd|pushf|pushad|push|popfd|popf|popad|pop|outsd|outs|out|or|not|nop|neg|mul|movzx|movz|mov|movsx|movs|movabs|ltr|lss|lsl|loop|lodsw|lodsd|lodsb|lock|loadall|lmsw|lldt|lidt|lgs|lgdt|lfs|les|leave|lea|lds|lar|lahf|jz|js|jpo|jpe|jp|jo|jnz|jns|jnp|jno|jnle|jnl|jnge|jng|jne|jnc|jnbe|jnb|jnae|jna|jmp|jle|jl|jge|jg|jecxz|je|jcxz|jcc|jc|jbe|jb|jae|ja|iretx|iret|into|int|insd|ins|inc|imul|idiv|ibts|hlt|esc|enter|div|dec|das|daa|cwde|cwd|cmpsw|cmpsd|cmpsb|cmp|cmc|clts|cli|cld|clc|cdq|cbw|call|bts|btr|btc|bt|bsr|bsf|bound|arpl|and|add|adc|aas|aam|aad|aaa)(q|w|b|d)?\\b"
+					"match": "\\b(?i)(xor|xlat|xchg|xbts|wait|verw|verr|test|syscall|sub|str|stosw|stosd|stosb|sti|std|stc|smsw|sldt|sidt|shrd|shr|shld|shl|sgdt|setcc|scasw|scasd|scasb|sbb|sar|sal|sahf|ror|rol|retn|retf|ret|repxx|rcr|rcl|pushfd|pushf|pushad|push|popfd|popf|popad|pop|outsd|outs|out|or|not|nop|neg|mul|movzx|movz|mov|movsx|movs|movabs|ltr|lss|lsl|loop|lodsw|lodsd|lodsb|lock|loadall|lmsw|lldt|lidt|lgs|lgdt|lfs|les|leave|lea|lds|lar|lahf|iretx|iret|into|int|insd|ins|inc|imul|idiv|ibts|hlt|esc|enter|div|dec|das|daa|cwde|cwd|cmpsw|cmpsd|cmpsb|cmp|cmc|clts|cli|cld|clc|cdq|cbw|call|bts|btr|btc|bt|bsr|bsf|bound|arpl|and|add|adc|aas|aam|aad|aaa)(q|w|b|d|l)?\\b"
 				}
 			]
 		},
@@ -67,7 +70,15 @@
 			"patterns": [
 				{
 					"name":"keyword.control.less",
-					"match": "\\b(?i)(xbts|wrmsr|vmxon|vmxoff|vmwrite|vmsave|vmrun|vmresume|vmread|vmptrst|vmptrld|vmmcall|vmload|vmlaunch|vmfunc|vmclear|vmcall|verw|verw|verr|verr|tzmsk|tzcnt|t1mskc|sysret|sysexit|sysenter|syscall|swapgs|str|stosq|stosd|stgi|smsw|smsw|sldt|sldt|skinit|sidt|sidt|shrd|shld|sgdt|sgdt|sfence|setcc|scasq|scasd|rsm|rdtscp|rdtsc|rdpmc|rdmsr|pushfq|pushfd|pushad|prefetcht2|prefetcht1|prefetcht0|prefetchnta|popfq|popfd|popcnt|popad|outsd|movzx|movsxd|movsx|movsd|lzcnt|ltr|ltr|lss|lsl|lsl|loopw|loopd|lodsq|lodsd|loadall|loadall|lmsw|lmsw|lldt|lldt|lidt|lidt|lgs|lgdt|lgdt|lfs|lar|lar|jrcxz|jecxz|iretx|iretq|invvpid|invlpga|invept|insd|imul|ibts|cwde|cqo|cpuid|cmpxchg8b|cmpxchg16b|cmpsq|cmpsd|cmovz|cmovs|cmovpo|cmovpe|cmovp|cmovo|cmovnz|cmovns|cmovnp|cmovno|cmovnle|cmovnl|cmovnge|cmovng|cmovne|cmovnc|cmovnbe|cmovnb|cmovnae|cmovna|cmovle|cmovl|cmovge|cmovg|cmove|cmovc|cmovbe|cmovb|cmovae|cmova|clts|clts|clgi|cdqe|cdq|bts|btr|btc|bt|bsr|bsf|blsr|blsmsk|blsic|blsi|blsfill|blcs|blcmsk|blcic|blci|blcfill|bextr|bextr|arpl|arpl|andn|adox|adcx)(q|w|b|d)?\\b"
+					"match": "\\b(?i)(xbts|wrmsr|vmxon|vmxoff|vmwrite|vmsave|vmrun|vmresume|vmread|vmptrst|vmptrld|vmmcall|vmload|vmlaunch|vmfunc|vmclear|vmcall|verw|verr|verr|tzmsk|tzcnt|t1mskc|sysret|sysexit|sysenter|syscall|swapgs|str|stosq|stosd|stgi|smsw|sldt|skinit|sidt|shrd|shld|sgdt|sfence|setcc|scasq|scasd|rsm|rdtscp|rdtsc|rdpmc|rdmsr|pushfq|pushfd|pushad|prefetcht2|prefetcht1|prefetcht0|prefetchnta|popfq|popfd|popcnt|popad|outsd|movzx|movsxd|movsx|movsd|lzcnt|ltr|ltr|lss|lsl|lsl|loop|lods|loadall|lmsw|lldt|lidt|lgs|lgdt|lfs|lar|jrcxz|jecxz|iretx|iretq|invvpid|invlpga|invept|insd|imul|ibts|cwde|cqo|cpuid|cmpxchg8b|cmpxchg16b|cmpsq|cmpsd|cmovz|cmovs|cmovpo|cmovpe|cmovp|cmovo|cmovnz|cmovns|cmovnp|cmovno|cmovnle|cmovnl|cmovnge|cmovng|cmovne|cmovnc|cmovnbe|cmovnb|cmovnae|cmovna|cmovle|cmovl|cmovge|cmovg|cmove|cmovc|cmovbe|cmovb|cmovae|cmova|clts|clgi|cdqe|cdq|bts|btr|btc|bt|bsr|bsf|blsr|blsmsk|blsic|blsi|blsfill|blcs|blcmsk|blcic|blci|blcfill|bextr|bextr|arpl|arpl|andn|adox|adcx)(q|w|b|d|l)?\\b"
+				}
+			]
+		},
+		"branch":{
+			"patterns": [
+				{
+					"name":"markup.bold",
+					"match": "\\b(?i)(jz|js|jpo|jpe|jp|jo|jnz|jns|jnp|jno|jnle|jnl|jnge|jng|jne|jnc|jnbe|jnb|jnae|jna|jmp|jle|jl|jge|jg|jecxz|je|jcxz|jcc|jc|jbe|jb|jae|ja)\\b"
 				}
 			]
 		},
@@ -83,7 +94,7 @@
 			"patterns": [
 				{
 					"name":"constant.regexp",
-					"match": "\\b(?i)(punpckldq|punpcklwd|punpcklbw|punpckhdq|punpckhwd|punpckhbw|psubusw|psubusb|psubsw|psubsb|psubd|psubw|psubb|psrlq|psrld|psrlw|psraw|psrad|psllq|pslld|psllw|pmullw|pmulhw|pmaddwd|pcmpgtd|pcmpgtw|pcmpgtb|pcmpeqd|pcmpeqw|pcmpeqb|pxor|por|pandn|pand|paddusw|paddusb|paddsw|paddsb|paddq|paddd|paddw|paddb|packuswb|packsswb|packssdw|maskmovq|movntq|pshufw|pinsrw|pextrw|pmovmskb|pminub|pmaxub|pavgb|pavgw|pmulhuw|pminsw|pmaxsw|psadbw)(q|w|b|d)?\\b"
+					"match": "\\b(?i)(punpckldq|punpcklwd|punpcklbw|punpckhdq|punpckhwd|punpckhbw|psubusw|psubusb|psubsw|psubsb|psubd|psubw|psubb|psrlq|psrld|psrlw|psraw|psrad|psllq|pslld|psllw|pmullw|pmulhw|pmaddwd|pcmpgtd|pcmpgtw|pcmpgtb|pcmpeqd|pcmpeqw|pcmpeqb|pxor|por|pandn|pand|paddusw|paddusb|paddsw|paddsb|paddq|paddd|paddw|paddb|packuswb|packsswb|packssdw|maskmovq|movntq|pshufw|pinsrw|pextrw|pmovmskb|pminub|pmaxub|pavgb|pavgw|pmulhuw|pminsw|pmaxsw|psadbw)(q|w|b|d|l)?\\b"
 				}
 			]
 		},
@@ -91,7 +102,7 @@
 			"patterns":[
 				{
 					"name":"support.type",
-					"match": "\\b(?i)(andps|andnps|orps|xorps|movups|movss|movups|movss|movlps|movhlps|movlps|unpcklps|unpckhps|movhps|movlhps|movhps|movaps|movaps|movntps|movmskps|cvtpi2ps|cvtsi2ss|cvtsi2ss|movntps|cvttps2pi|cvttss2si|cvttss2si|cvtps2pi|cvtss2si|cvtss2si|ucomiss|comiss|sqrtps|sqrtss|rsqrtps|rsqrtss|rcpps|rcpss|addps|addss|mulps|mulss|subps|subss|minps|minss|divps|divss|maxps|maxss|ldmxcsr|stmxcsr|cmpps|cmpss|shufps)(q|w|b|d)?\\b"
+					"match": "\\b(?i)(andps|andnps|orps|xorps|movups|movss|movups|movss|movlps|movhlps|movlps|unpcklps|unpckhps|movhps|movlhps|movhps|movaps|movaps|movntps|movmskps|cvtpi2ps|cvtsi2ss|cvtsi2ss|movntps|cvttps2pi|cvttss2si|cvttss2si|cvtps2pi|cvtss2si|cvtss2si|ucomiss|comiss|sqrtps|sqrtss|rsqrtps|rsqrtss|rcpps|rcpss|addps|addss|mulps|mulss|subps|subss|minps|minss|divps|divss|maxps|maxss|ldmxcsr|stmxcsr|cmpps|cmpss|shufps)(q|w|b|d|l)?\\b"
 				}
 			]
 		},
